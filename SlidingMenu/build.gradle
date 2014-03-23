@@ -1,0 +1,49 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:0.8.1+'
+    }
+}
+apply plugin: 'android-library'
+ 
+dependencies {
+    compile 'com.android.support:support-v4:13.0.0'
+}
+ 
+apply plugin: 'maven'
+group = 'com.jeremyfeinstein'
+version = '1.0'
+uploadArchives {
+  repositories {
+    mavenDeployer {
+      repository url: 'file://' + new File(System.getProperty('user.home'), '.m2/repository').absolutePath
+    }
+  }
+}
+task install(dependsOn: uploadArchives)
+ 
+android {
+    compileSdkVersion 15
+    buildToolsVersion "19.0.1"
+ 
+    defaultConfig {
+        minSdkVersion 7
+        targetSdkVersion 16
+    }
+ 
+    sourceSets {
+        main {
+            java.srcDirs = ['src']
+            resources.srcDirs = ['src']
+            aidl.srcDirs = ['src']
+            renderscript.srcDirs = ['src']
+            res.srcDirs = ['res']
+            assets.srcDirs = ['assets']
+ 
+            manifest.srcFile 'AndroidManifest.xml'
+        }
+    }
+ 
+}
